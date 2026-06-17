@@ -1,0 +1,32 @@
+# Datos específicos para la Cover Letter
+# Editar este archivo antes de compilar cada nueva postulación.
+
+recipient:
+  en: "Selection Committee"
+  es: "Equipo de Selección"
+
+company:
+  en: "World Bank Group"
+  es: "[Nombre de la Empresa]"
+
+position:
+  en: "Local Field Coordinator"
+  es: "[Nombre de la Posición]"
+
+date:
+  en: "\\today"
+  es: "\\today"
+
+paragraphs:
+  en:
+    - "I am writing to express my strong interest in the **{{ position.en }}** position at **{{ company.en }}**. As an AI Engineer and Data Scientist with a background in Neurosciences, I specialize in building LLM architectures, Machine Learning solutions, and automating data pipelines."
+    - "In my recent roles as an Academic Coordinator and AI Mentor, I have successfully led technical teams and automated complex data workflows. I thrive in environments that require interdisciplinary problem-solving and the scalable application of artificial intelligence. I am confident that my technical expertise, combined with my leadership skills and critical thinking, will allow me to make a meaningful impact at your team."
+    - "I have attached my resume for your review. I would welcome the opportunity to schedule an interview to discuss how my skills and experiences align with your team's current goals."
+  es:
+    - "Les escribo con gran entusiasmo para presentar mi candidatura a la posición de **{{ position.es }}** en **{{ company.es }}**. Como Ingeniero en Inteligencia Artificial y Data Scientist con formación de base en Neurociencias, me especializo en el desarrollo de arquitecturas con LLMs, Machine Learning y automatización de datos."
+    - "En mi experiencia reciente como Coordinador Académico y Mentor en IA, he liderado equipos técnicos y automatizado pipelines de datos complejos. Disfruto especialmente de los desafíos que requieren una resolución interdisciplinaria y la aplicación de la inteligencia artificial para escalar soluciones. Creo que mi perfil técnico, combinado con mi capacidad de liderazgo y pensamiento crítico, puede aportar mucho valor a los objetivos de su equipo."
+    - "Adjunto a esta carta mi currículum vitae para que puedan conocer más sobre mi trayectoria. Estaría encantado de tener una breve reunión o entrevista para conversar sobre cómo mi perfil puede alinearse con las necesidades actuales de la empresa."
+
+closing:
+  en: "Sincerely,"
+  es: "Atentamente,"

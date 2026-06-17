@@ -1,0 +1,140 @@
+%==============================================================
+% CV One-Pager Mejorado - {{ contact.name }}
+%==============================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[{{ 'english' if lang == 'en' else 'spanish' }}]{babel}
+\usepackage{lmodern}
+\usepackage[margin=0.75cm,top=0.5cm,bottom=0.6cm]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{calc}
+
+%-------------------- Colores --------------------
+\definecolor{primary}{HTML}{1F3A5F}
+\definecolor{accent}{HTML}{2E86AB}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+%-------------------- Comandos personalizados --------------------
+\newcommand{\cvtitle}[1]{ %
+  {\color{primary}\bfseries\large\uppercase{ #1 }}
+  {\color{accent}\hrule height 0.5pt}\vspace{6pt}
+}
+
+\newcommand{\cvexperience}[4]{ %
+  {\bfseries\normalsize\color{primary} #1 } \hfill {\small\color{gray} #3 }\\
+  {\small\color{accent}\itshape #2 } \\
+  {\small #4 }\par
+  \vspace{5pt}
+}
+
+\newcommand{\cveducation}[3]{ %
+  {\bfseries\small\color{primary} #1 } \hfill {\small\color{gray} #3 }\\
+  {\small #2 }\par
+}
+
+%-------------------- ATS Friendly Unicode --------------------
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+%==============================================================
+\begin{document}
+
+% ==================== IMAGEN DE PERFIL REDONDEADA ====================
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north east, inner sep=0cm] at ($ (current page.north east) + (-0.75cm, -0.5cm) $) { %
+    \begin{tikzpicture}
+      \clip (0,0) circle (1.5cm);
+      \node[anchor=center] at (0,0) {\includegraphics[width=3cm, height=3cm]{../assets/perfil.png}};
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
+
+% ==================== ENCABEZADO ====================
+\begin{minipage}[t]{0.65\textwidth}
+{\bfseries\LARGE \uppercase{ {{- contact.name -}} }}\\[1pt]
+{\color{accent}\large {{ titles[lang] }} }\\[3pt]
+\end{minipage}
+
+% ==================== CONTACTO ====================
+{\normalsize
+\href{mailto:{{ contact.email }}}{ {{- contact.email -}} } $|$
+{{ contact.phone }} $|$
+{{ contact.location[lang] }}\\
+\href{ {{ contact.github }} }{GitHub} $|$
+\href{ {{ contact.website }} }{Portfolio} $|$
+\href{ {{ contact.linkedin }} }{LinkedIn}
+}
+
+{\color{accent}\hrule height 0.5pt}\vspace{16pt}
+
+% ==================== PERFIL ====================
+\cvtitle{ {{ headers.profile[lang] }} }
+{\normalsize {{ profile[lang] }} }
+\vspace{8pt}
+
+% ==================== EXPERIENCIA ====================
+\cvtitle{ {{ headers.experience[lang] }} }
+
+{% for job in experience %}
+\cvexperience{ {{- job.title[lang] -}} }{ {{- job.company[lang] -}} }{ {{- job.period[lang] if job.period is mapping else job.period -}} }{ {{- job.highlights[lang] | join(' ') | replace('%', '\%') | replace('&', '\&') -}} }
+{% endfor %}
+
+
+% ==================== EDUCACIÓN & CERTIFICACIONES ====================
+\begin{minipage}[t]{0.48\textwidth}
+\cvtitle{ {{ headers.education[lang] }} }
+{% for edu in education.primary %}
+\cveducation{ {{- edu.title[lang] | replace('**', '') -}} }{ {{- edu.institution[lang] -}} }{ {{- edu.period[lang] if edu.period is mapping else edu.period -}} }
+{% endfor %}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\cvtitle{ {{ headers.certifications[lang] }} }
+{\normalsize
+{% for cert in certifications %}
+{{ cert[lang] | replace('&', '\&') | replace('%', '\%') }} \\
+{% endfor %}
+}
+\end{minipage}
+
+\vspace{8pt}
+
+% ==================== HABILIDADES ====================
+\cvtitle{ {{ headers.skills[lang] }} }
+{\normalsize
+{% for skill in skills %}
+{{ skill.category[lang] | replace('**', '') }} {{ skill.content[lang] if skill.content is mapping else skill.content | replace('&', '\&') | replace('%', '\%') }} \\
+{% endfor %}
+}
+
+\vspace{8pt}
+
+% ==================== IDIOMAS & PUBLICACIONES ====================
+\begin{minipage}[t]{0.48\textwidth}
+\cvtitle{ {{ headers.languages[lang] }} }
+{\normalsize
+{% for lang_item in languages %}
+{{ lang_item.language[lang] | replace('**', '') }} -- {{ lang_item.level[lang] }} \\
+{% endfor %}
+}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\cvtitle{ {{ headers.publications[lang] }} }
+{\small
+{% for pub in publications %}
+{{ pub[lang] }} \\
+{% endfor %}
+}
+\end{minipage}
+
+\end{document}

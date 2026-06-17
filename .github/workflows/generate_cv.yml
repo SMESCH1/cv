@@ -6,7 +6,10 @@ on:
       - main
     paths:
       - 'src/cv_data.yaml'
+      - 'src/cover_letter_data.yaml'
       - 'src/cv_template.md.j2'
+      - 'src/cv_template.tex.j2'
+      - 'src/cover_letter_template.tex.j2'
       - 'src/build_cv.py'
       - 'generate_pdf.sh'
       - '.github/workflows/generate_cv.yml'
@@ -36,7 +39,7 @@ jobs:
       - name: Install Pandoc
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-extra-utils texlive-latex-extra
+          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-extra-utils texlive-latex-extra texlive-pictures
 
       - name: Generate Markdown CVs and PDFs
         run: |
@@ -46,5 +49,5 @@ jobs:
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Automated CV generation: update Markdown and PDFs"
-          file_pattern: "src/*.md src/english/*.md output/*.pdf"
+          commit_message: "Automated CV generation: update Markdown, LaTeX and PDFs"
+          file_pattern: "src/*.md src/english/*.md src/*.tex src/english/*.tex output/*.pdf"

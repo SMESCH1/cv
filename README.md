@@ -1,68 +1,71 @@
-# CV Automation Pipeline
+# 🚀 CV & Cover Letter Automation Pipeline
+**Por Sebastián Mesch Henriques**
 
-This repository contains the source data and scripts for generating perfectly synchronized bi-lingual (English and Spanish) versions of Gustavo Juantorena's CV.
+Este repositorio contiene la arquitectura completa para generar automáticamente múltiples versiones y formatos de mi Currículum Vitae y Cartas de Presentación, manteniendo sincronizados los idiomas Español e Inglés sin duplicar esfuerzos.
 
-The pipeline separates content data from layout and design, ensuring that as new experiences are added, both language versions and PDF files are updated seamlessly and accurately without duplication of effort.
+El pipeline separa completamente los **datos** (el contenido) del **diseño** (las plantillas), permitiendo compilar diseños radicalmente distintos a partir de la misma fuente de información.
 
-## Repository Structure
+---
 
-- `src/cv_data.yaml`: **The source of truth.** All CV content resides here.
-- `src/cv_template.md.j2`: The Jinja2 template dictating the layout of the Markdown file.
-- `src/build_cv.py`: Python script that reads the YAML data and renders the template to produce the English and Spanish Markdown files.
-- `generate_pdf.sh`: Main executable script. Runs the Python build and then uses Pandoc to generate the final PDFs.
-- `src/CV_Gustavo_Juantorena.md`: Auto-generated Spanish Markdown output.
-- `src/english/CV_Gustavo_Juantorena_EN.md`: Auto-generated English Markdown output.
-- `output/`: Directory where the final PDF files are generated.
+## 📂 Estructura de Datos (Tu Fuente de Verdad)
 
-## Requirements
+Para actualizar tu información, **nunca debes editar los archivos PDF o `.tex` / `.md` generados**. Todo el contenido vive en dos archivos YAML:
 
-The generation pipeline requires Python 3 and Pandoc. To install the required Python libraries, run:
+1. `src/cv_data.yaml`: Contiene tu perfil, experiencias, educación, publicaciones y habilidades.
+2. `src/cover_letter_data.yaml`: Contiene la información específica de la empresa a la que estás aplicando (puesto, nombre de la empresa, párrafos de la carta).
 
-```bash
-pip install pyyaml jinja2
-```
+*Ambos archivos soportan diccionarios bilingües (`en` y `es`) para cada entrada de texto.*
 
-## Modifying the CV Data
+---
 
-To update or add new items to the CV, you **do not** need to edit the separate Markdown files manually. 
+## 🎨 Las Plantillas (Templates)
 
-1. Open `src/cv_data.yaml`.
-2. Locate the section you wish to update (e.g., `experience`, `education`, `skills`).
-3. Add or modify the data. For text that varies by language, ensure both `en` and `es` keys are populated.
-4. Save the file.
+El motor utiliza **Jinja2** para inyectar tus datos en las siguientes plantillas maestras:
 
-*Example item format:*
-```yaml
-  - id: "new_job"
-    title:
-      en: "Senior Data Scientist"
-      es: "Data Scientist Semi-Senior"
-    company:
-      en: "Example Corp"
-      es: "Example Corp"
-...
-```
+- `src/cv_template.tex.j2`: Plantilla LaTeX de diseño moderno ("One-Pager") ideal para impresionar a reclutadores humanos y compartir en formato visual.
+- `src/cv_template.md.j2`: Plantilla Markdown estructurada que Pandoc convierte en un PDF de texto plano (1 columna, formato clásico). **Esta es la versión que debes enviar a los sistemas ATS (ej. Workday, Taleo).**
+- `src/cover_letter_template.tex.j2`: Plantilla LaTeX para la carta de presentación, diseñada visualmente para hacer juego con el diseño One-Pager de tu CV.
 
-## Generating the Final CVs
+---
 
-To generate both the Markdown updates and compile the new PDFs, simply execute the main shell script from the repository root:
+## ⚙️ ¿Cómo actualizar y generar nuevos PDFs?
 
-```bash
-./generate_pdf.sh
-```
+Tienes dos opciones para compilar tus PDFs:
 
-This command will:
-1. Run `build_cv.py` to rewrite the `.md` files based on the latest `cv_data.yaml`.
-2. Execute Pandoc to convert the newly built Markdown files into high-quality PDFs placed in the `output/` directory.
+### Opción 1: Compilación Automática en la Nube (Recomendada)
+Este repositorio cuenta con un flujo de **GitHub Actions** (`.github/workflows/generate_cv.yml`).
+1. Edita el archivo `cv_data.yaml` o `cover_letter_data.yaml` directamente en GitHub (o haz commit localmente y haz `git push`).
+2. La nube de GitHub automáticamente instalará Python, LaTeX (MiKTeX) y Pandoc.
+3. Generará 6 archivos PDF nuevos y los subirá a la carpeta `output/`.
+4. ¡Listo! Solo descarga tus PDFs actualizados.
 
-## Automated CI/CD (GitHub Actions)
+### Opción 2: Compilación Local
+Si deseas probar cómo se ven los cambios en tu computadora antes de subirlos:
+1. Instala Python 3, [Pandoc](https://pandoc.org/) y [MiKTeX](https://miktex.org/).
+2. Instala las librerías de Python:
+   ```bash
+   pip install pyyaml jinja2
+   ```
+3. Ejecuta el script maestro:
+   ```bash
+   ./generate_pdf.sh
+   ```
+   *(Si estás en Windows, puedes correr `python src/build_cv.py` para generar los `.tex` y `.md`, y luego compilarlos con tu editor de LaTeX favorito).*
 
-This repository includes a GitHub Actions workflow (`.github/workflows/generate_cv.yml`) that completely automates CV generation.
+---
 
-Whenever a push is made to the `main` branch containing changes to `src/cv_data.yaml` (or the generation scripts), GitHub Actions will automatically:
-1. Setup a Python environment and install the required dependencies (`pyyaml`, `jinja2`).
-2. Install Pandoc and LaTeX essentials.
-3. Execute `./generate_pdf.sh` to build fresh Markdown files and PDFs.
-4. Auto-commit and push the newly generated files back to the repository.
+## 📁 Archivos Generados (`output/`)
 
-You simply edit the data, push your commit, and let GitHub handle the rest!
+Tras una compilación exitosa, la carpeta `output/` contendrá:
+- **CV_Sebastian_Mesch_Henriques.pdf** (Diseño LaTeX - ES)
+- **CV_Sebastian_Mesch_Henriques_EN.pdf** (Diseño LaTeX - EN)
+- **CV_Sebastian_Mesch_Henriques_ES_Pandoc.pdf** (Formato ATS - ES)
+- **CV_Sebastian_Mesch_Henriques_EN_Pandoc.pdf** (Formato ATS - EN)
+- **Cover_Letter_Sebastian_Mesch.pdf** (LaTeX - ES)
+- **Cover_Letter_Sebastian_Mesch_EN.pdf** (LaTeX - EN)
+
+---
+
+## 💡 Estrategia de Aplicación
+- **Para Portales de Empleo Automáticos (ATS):** Utiliza los PDFs generados con **Pandoc**. Los robots pueden extraer el texto a la perfección porque es un documento de una sola columna sin gráficos complejos.
+- **Para Correos Directos o Entrevistas:** Utiliza los PDFs generados con **LaTeX**. El diseño en columnas e imágenes causa un excelente impacto visual.

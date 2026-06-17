@@ -1,7 +1,7 @@
 # {{ contact.name }}
 **{{ titles[lang] }}**
 
-{{ contact.email }} | [LinkedIn]({{ contact.linkedin }}) | [GitHub]({{ contact.github }}) | [Website]({{ contact.website }}) | [Google Scholar]({{ contact.scholar }})
+{{ contact.email }} | [LinkedIn]({{ contact.linkedin }}) | [GitHub]({{ contact.github }}) | [Website]({{ contact.website }}) | {{ contact.phone }}
 
 ---
 
@@ -27,27 +27,20 @@
 ## {{ headers.education[lang] }}
 
 {% for edu in education.primary %}
-*   {{ edu.title[lang] }}
-    * {{ edu.description[lang] }}
+*   {{ edu.title[lang] }} | {{ edu.institution[lang] }} ({{ edu.period[lang] if edu.period is mapping else edu.period }})
 {% endfor %}
 
-{{ education.additional_header[lang] }}
+---
 
-{% for edu in education.additional %}
-*   {{ edu[lang] }}
-{% endfor %}
+## {{ headers.certifications[lang] }}
 
-{{ education.mentorship_header[lang] }}
-
-{% for mentor in education.mentorship %}
-*   {{ mentor[lang] }}
+{% for cert in certifications %}
+*   {{ cert[lang] }}
 {% endfor %}
 
 ---
 
 ## {{ headers.publications[lang] }}
-
-{{ publications_header[lang] }}
 
 {% for pub in publications %}
 {{ loop.index }}.  {{ pub[lang] }}
@@ -58,7 +51,15 @@
 ## {{ headers.skills[lang] }}
 
 {% for skill in skills %}
-*   {{ skill[lang] }}
+*   {{ skill.category[lang] }} {{ skill.content[lang] if skill.content is mapping else skill.content }}
+{% endfor %}
+
+---
+
+## {{ headers.languages[lang] }}
+
+{% for lang_item in languages %}
+*   {{ lang_item.language[lang] }} - {{ lang_item.level[lang] }}
 {% endfor %}
 
 ---
