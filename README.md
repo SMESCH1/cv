@@ -9,10 +9,10 @@ El pipeline separa completamente los **datos** (el contenido) del **diseño** (l
 
 ## 📂 Estructura de Datos (Tu Fuente de Verdad)
 
-Para actualizar tu información, **nunca debes editar los archivos PDF o `.tex` / `.md` generados**. Todo el contenido vive en dos archivos YAML:
+Para actualizar tu información, **nunca debes editar los archivos PDF o `.tex` / `.md` generados**. Todo el contenido vive en la carpeta `src/data/`:
 
-1. `src/cv_data.yaml`: Contiene tu perfil, experiencias, educación, publicaciones y habilidades.
-2. `src/cover_letter_data.yaml`: Contiene la información específica de la empresa a la que estás aplicando (puesto, nombre de la empresa, párrafos de la carta).
+1. `src/data/cv_data.yaml`: Contiene tu perfil, experiencias, educación, publicaciones y habilidades.
+2. `src/data/cover_letter_data.yaml`: Contiene la información específica de la empresa a la que estás aplicando (puesto, nombre de la empresa, párrafos de la carta).
 
 *Ambos archivos soportan diccionarios bilingües (`en` y `es`) para cada entrada de texto.*
 
@@ -20,11 +20,11 @@ Para actualizar tu información, **nunca debes editar los archivos PDF o `.tex` 
 
 ## 🎨 Las Plantillas (Templates)
 
-El motor utiliza **Jinja2** para inyectar tus datos en las siguientes plantillas maestras:
+El motor utiliza **Jinja2** para inyectar tus datos en las plantillas maestras ubicadas en `src/templates/`:
 
-- `src/cv_template.tex.j2`: Plantilla LaTeX de diseño moderno ("One-Pager") ideal para impresionar a reclutadores humanos y compartir en formato visual.
-- `src/cv_template.md.j2`: Plantilla Markdown estructurada que Pandoc convierte en un PDF de texto plano (1 columna, formato clásico). **Esta es la versión que debes enviar a los sistemas ATS (ej. Workday, Taleo).**
-- `src/cover_letter_template.tex.j2`: Plantilla LaTeX para la carta de presentación, diseñada visualmente para hacer juego con el diseño One-Pager de tu CV.
+- `src/templates/cv_template.tex.j2`: Plantilla LaTeX de diseño moderno ("One-Pager") ideal para impresionar a reclutadores humanos.
+- `src/templates/cv_template.md.j2`: Plantilla Markdown estructurada que Pandoc convierte en un PDF de texto plano (formato clásico ATS).
+- `src/templates/cover_letter_template.tex.j2`: Plantilla LaTeX para la carta de presentación.
 
 ---
 
@@ -50,7 +50,7 @@ Si deseas probar cómo se ven los cambios en tu computadora antes de subirlos:
    ```bash
    ./generate_pdf.sh
    ```
-   *(Si estás en Windows, puedes correr `python src/build_cv.py` para generar los `.tex` y `.md`, y luego compilarlos con tu editor de LaTeX favorito).*
+   *(Si estás en Windows, puedes correr `python build_cv.py` en la raíz para generar los `.tex` y `.md` temporales en la carpeta `build/`).*
 
 ---
 

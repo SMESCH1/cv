@@ -1,53 +1,51 @@
-name: Generate CV
+name: Generate CV PDFs
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'src/cv_data.yaml'
-      - 'src/cover_letter_data.yaml'
-      - 'src/cv_template.md.j2'
-      - 'src/cv_template.tex.j2'
-      - 'src/cover_letter_template.tex.j2'
-      - 'src/build_cv.py'
+      - 'src/data/cv_data.yaml'
+      - 'src/data/cover_letter_data.yaml'
+      - 'src/templates/cv_template.md.j2'
+      - 'src/templates/cv_template.tex.j2'
+      - 'src/templates/cover_letter_template.tex.j2'
+      - 'build_cv.py'
       - 'generate_pdf.sh'
       - '.github/workflows/generate_cv.yml'
-  workflow_dispatch:
+      - 'assets/**'
 
 jobs:
-  build_cv:
+  build:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.x'
 
       - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml jinja2
+        run: pip install pyyaml jinja2
 
       - name: Install Pandoc
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-extra-utils texlive-latex-extra texlive-pictures
+        run: sudo apt-get update && sudo apt-get install -y pandoc
 
-      - name: Generate Markdown CVs and PDFs
+      - name: Install TeX Live
+        run: sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-pictures
+
+      - name: Generate PDFs
         run: |
-          chmod +x ./generate_pdf.sh
+          chmod +x generate_pdf.sh
           ./generate_pdf.sh
 
-      - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Automated CV generation: update Markdown, LaTeX and PDFs"
-          file_pattern: "src/*.md src/english/*.md src/*.tex src/english/*.tex output/*.pdf"
+      - name: Commit and push generated PDFs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add output/*.pdf
+          git commit -m "Auto-generate PDFs from latest data" || echo "No changes to commit"
+          git push

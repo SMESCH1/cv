@@ -1,32 +1,32 @@
 #!/bin/bash
+set -e
 
-echo "🔄 Construyendo archivos Markdown y LaTeX desde cv_data.yaml..."
-python3 src/build_cv.py
-
-echo "🔄 Generando CVs en progreso..."
-
+# Asegurarse de que el directorio de salida exista
 mkdir -p output
 
-# Generar PDF clásico del CV con Pandoc (Español)
-pandoc src/CV_Sebastian_Mesch_Henriques.md \
-    -H assets/disable_hyphens.tex \
-    -V geometry:margin=1in \
-    -o output/CV_Sebastian_Mesch_Henriques_ES_Pandoc.pdf
+echo "Construyendo archivos .md y .tex a partir de cv_data.yaml y cover_letter_data.yaml..."
+python build_cv.py
 
-# Generar PDF clásico del CV con Pandoc (Inglés)
-pandoc src/english/CV_Sebastian_Mesch_Henriques_EN.md \
-    -H assets/disable_hyphens.tex \
-    -V geometry:margin=1in \
-    -o output/CV_Sebastian_Mesch_Henriques_EN_Pandoc.pdf
+echo "Generando PDFs..."
 
-# Generar PDF moderno del CV con pdflatex (Español)
-cd src
-pdflatex -interaction=nonstopmode -output-directory=../output CV_Sebastian_Mesch_Henriques.tex
-pdflatex -interaction=nonstopmode -output-directory=../output Cover_Letter_Sebastian_Mesch.tex
-cd ..
+# ----------------- ESPAÑOL -----------------
+echo "Compilando Español..."
+# Pandoc
+pandoc build/es/CV_Sebastian_Mesch_Henriques.md -H assets/disable_hyphens.tex -V geometry:margin=1in -o output/CV_Sebastian_Mesch_Henriques_ES_Pandoc.pdf
 
-# Generar PDF moderno del CV con pdflatex (Inglés)
-cd src/english
+# LaTeX
+cd build/es
+pdflatex -interaction=nonstopmode -output-directory=../../output CV_Sebastian_Mesch_Henriques.tex
+pdflatex -interaction=nonstopmode -output-directory=../../output Cover_Letter_Sebastian_Mesch.tex
+cd ../..
+
+# ----------------- INGLÉS -----------------
+echo "Compilando Inglés..."
+# Pandoc
+pandoc build/en/CV_Sebastian_Mesch_Henriques_EN.md -H assets/disable_hyphens.tex -V geometry:margin=1in -o output/CV_Sebastian_Mesch_Henriques_EN_Pandoc.pdf
+
+# LaTeX
+cd build/en
 pdflatex -interaction=nonstopmode -output-directory=../../output CV_Sebastian_Mesch_Henriques_EN.tex
 pdflatex -interaction=nonstopmode -output-directory=../../output Cover_Letter_Sebastian_Mesch_EN.tex
 cd ../..
