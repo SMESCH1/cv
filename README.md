@@ -39,18 +39,16 @@ Este repositorio cuenta con un flujo de **GitHub Actions** (`.github/workflows/g
 3. Generará 6 archivos PDF nuevos y los subirá a la carpeta `output/`.
 4. ¡Listo! Solo descarga tus PDFs actualizados.
 
-### Opción 2: Compilación Local
-Si deseas probar cómo se ven los cambios en tu computadora antes de subirlos:
-1. Instala Python 3, [Pandoc](https://pandoc.org/) y [MiKTeX](https://miktex.org/).
-2. Instala las librerías de Python:
+### Opción 2: Compilación Local (Windows/Mac/Linux)
+Si deseas generar tus PDFs en tu propia computadora rápidamente sin esperar a la nube:
+1. Asegúrate de tener instalados **Python 3**, **[Pandoc](https://pandoc.org/)** y **[MiKTeX](https://miktex.org/)** (o TeX Live).
+2. Instala las dependencias de Python:
    ```bash
    pip install pyyaml jinja2
    ```
-3. Ejecuta el script maestro:
-   ```bash
-   ./generate_pdf.sh
-   ```
-   *(Si estás en Windows, puedes correr `python build_cv.py` en la raíz para generar los `.tex` y `.md` temporales en la carpeta `build/`).*
+3. Ejecuta el script correspondiente a tu sistema operativo haciendo doble clic o desde la terminal:
+   - **En Windows:** Ejecuta `generate_pdf.bat`
+   - **En Mac/Linux:** Ejecuta `./generate_pdf.sh`
 
 ---
 
