@@ -167,12 +167,16 @@ certifications:
     es: "Big Data (Codo a Codo 2022)"
 
 publications:
-  - en: "Psychology and Society (Scielo Brazil 2025)"
-    es: "Psicología y Sociedad (Scielo Brasil 2025)"
-  - en: "Systematic Review (Univ. Favaloro 2025)"
-    es: "Revisión Sistemática (Univ. Favaloro 2025)"
-  - en: "Argentine Society for Research in Neurosciences (2024)"
-    es: "Soc. Argentina de Neurociencias (2024)"
+  - text:
+      en: "Psychology and Society (Scielo Brazil 2025)"
+      es: "Psicología y Sociedad (Scielo Brasil 2025)"
+  - text:
+      en: "Systematic Review (Univ. Favaloro 2025)"
+      es: "Revisión Sistemática (Univ. Favaloro 2025)"
+    url: "https://www.psi.uba.ar/publicaciones/anuario/trabajos_completos/30/mesch.pdf"
+  - text:
+      en: "Argentine Society for Research in Neurosciences (2024)"
+      es: "Soc. Argentina de Neurociencias (2024)"
 
 skills:
   - category:

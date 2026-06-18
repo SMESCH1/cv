@@ -43,7 +43,11 @@
 ## {{ headers.publications[lang] }}
 
 {% for pub in publications %}
-{{ loop.index }}.  {{ pub[lang] }}
+{% if pub.url %}
+{{ loop.index }}.  [{{ pub.text[lang] }}]({{ pub.url }})
+{% else %}
+{{ loop.index }}.  {{ pub.text[lang] }}
+{% endif %}
 {% endfor %}
 
 ---

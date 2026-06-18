@@ -132,7 +132,11 @@
 \cvtitle{ {{ headers.publications[lang] }} }
 {\small
 {% for pub in publications %}
-{{ pub[lang] }} \\
+{% if pub.url %}
+\href{ {{- pub.url -}} }{ {{- pub.text[lang] -}} } \\
+{% else %}
+{{ pub.text[lang] }} \\
+{% endif %}
 {% endfor %}
 }
 \end{minipage}
