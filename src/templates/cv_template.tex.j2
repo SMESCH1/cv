@@ -112,7 +112,7 @@
 \cvtitle{ {{ headers.skills[lang] }} }
 {\normalsize
 {% for skill in skills %}
-{{ skill.category[lang] | replace('**', '') }} {{ skill.content[lang] if skill.content is mapping else skill.content | replace('&', '\&') | replace('%', '\%') }} \\
+{{ skill.category[lang] | replace('**', '') | replace('&', '\&') }} {{ skill.content[lang] if skill.content is mapping else skill.content | replace('&', '\&') | replace('%', '\%') }} \\
 {% endfor %}
 }
 
