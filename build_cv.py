@@ -55,13 +55,13 @@ def build_cvs():
     md_template = env.get_template(MD_TEMPLATE_FILE)
 
     # Render Spanish MD
-    md_es = md_template.render(lang="es", **data)
+    md_es = md_template.render(lang="es", root_dir=ROOT_DIR, **data)
     with open(MD_OUT_ES, "w", encoding="utf-8") as f:
         f.write(md_es)
     print(f"OK Generated Spanish Markdown CV: {MD_OUT_ES}")
 
     # Render English MD
-    md_en = md_template.render(lang="en", **data)
+    md_en = md_template.render(lang="en", root_dir=ROOT_DIR, **data)
     with open(MD_OUT_EN, "w", encoding="utf-8") as f:
         f.write(md_en)
     print(f"OK Generated English Markdown CV: {MD_OUT_EN}")
@@ -70,13 +70,13 @@ def build_cvs():
     tex_template = env.get_template(TEX_TEMPLATE_FILE)
 
     # Render Spanish TEX
-    tex_es = tex_template.render(lang="es", **data)
+    tex_es = tex_template.render(lang="es", root_dir=ROOT_DIR, **data)
     with open(TEX_OUT_ES, "w", encoding="utf-8") as f:
         f.write(tex_es)
     print(f"OK Generated Spanish LaTeX CV: {TEX_OUT_ES}")
 
     # Render English TEX
-    tex_en = tex_template.render(lang="en", **data)
+    tex_en = tex_template.render(lang="en", root_dir=ROOT_DIR, **data)
     with open(TEX_OUT_EN, "w", encoding="utf-8") as f:
         f.write(tex_en)
     print(f"OK Generated English LaTeX CV: {TEX_OUT_EN}")
@@ -85,13 +85,13 @@ def build_cvs():
     cl_template = env.get_template(CL_TEMPLATE_FILE)
 
     # Render Spanish Cover Letter
-    cl_es = cl_template.render(lang="es", cv=data, cl=cl_data)
+    cl_es = cl_template.render(lang="es", root_dir=ROOT_DIR, cv=data, cl=cl_data)
     with open(CL_OUT_ES, "w", encoding="utf-8") as f:
         f.write(cl_es)
     print(f"OK Generated Spanish LaTeX Cover Letter: {CL_OUT_ES}")
 
     # Render English Cover Letter
-    cl_en = cl_template.render(lang="en", cv=data, cl=cl_data)
+    cl_en = cl_template.render(lang="en", root_dir=ROOT_DIR, cv=data, cl=cl_data)
     with open(CL_OUT_EN, "w", encoding="utf-8") as f:
         f.write(cl_en)
     print(f"OK Generated English LaTeX Cover Letter: {CL_OUT_EN}")

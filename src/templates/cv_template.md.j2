@@ -1,3 +1,16 @@
+{% if contact.profile_image %}
+```{=latex}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north east, inner sep=0cm] at ($ (current page.north east) + (-0.75cm, -0.5cm) $) { %
+    \begin{tikzpicture}
+      \clip (0,0) circle (1.5cm);
+      \node[anchor=center] at (0,0) {\includegraphics[width=3cm, height=3cm]{ {{- root_dir -}} / {{- contact.profile_image -}} }};
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
+```
+{% endif %}
+
 # {{ contact.name }}
 **{{ titles[lang] }}**
 

@@ -48,15 +48,17 @@
 %==============================================================
 \begin{document}
 
+{% if contact.profile_image %}
 % ==================== IMAGEN DE PERFIL REDONDEADA ====================
 \begin{tikzpicture}[remember picture, overlay]
   \node[anchor=north east, inner sep=0cm] at ($ (current page.north east) + (-0.75cm, -0.5cm) $) { %
     \begin{tikzpicture}
       \clip (0,0) circle (1.5cm);
-      \node[anchor=center] at (0,0) {\includegraphics[width=3cm, height=3cm]{../assets/perfil.png}};
+      \node[anchor=center] at (0,0) {\includegraphics[width=3cm, height=3cm]{../../{{ contact.profile_image }}}};
     \end{tikzpicture}
   };
 \end{tikzpicture}
+{% endif %}
 
 % ==================== ENCABEZADO ====================
 \begin{minipage}[t]{0.65\textwidth}

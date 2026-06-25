@@ -29,6 +29,18 @@
 %==============================================================
 \begin{document}
 
+{% if cv.contact.profile_image %}
+% ==================== IMAGEN DE PERFIL REDONDEADA ====================
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north east, inner sep=0cm] at ($ (current page.north east) + (-0.75cm, -0.5cm) $) { %
+    \begin{tikzpicture}
+      \clip (0,0) circle (1.5cm);
+      \node[anchor=center] at (0,0) {\includegraphics[width=3cm, height=3cm]{../../{{ cv.contact.profile_image }}}};
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
+{% endif %}
+
 % ==================== ENCABEZADO ====================
 \begin{center}
 {\bfseries\LARGE \uppercase{ {{- cv.contact.name -}} }}\\[3pt]
@@ -49,7 +61,7 @@
 % ==================== DATOS DEL RECEPTOR ====================
 \begin{flushleft}
 {{ cl.date[lang] }}\\[1em]
-\textbf{ {{- cl.recipient[lang] -}} }\\
+\textbf{ {{- cl.recipient[lang] -}} }\\\relax
 {{ cl.company[lang] }}
 \end{flushleft}
 
